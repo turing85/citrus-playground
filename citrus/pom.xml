@@ -162,10 +162,6 @@
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-validation-json</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-validation-text</artifactId>
         </dependency>
         <dependency>
