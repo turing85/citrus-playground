@@ -1,0 +1,27 @@
+version: "3.7"
+services:
+  service:
+    build:
+      context: ../service
+      dockerfile: ../service/src/main/docker/Dockerfile
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      QUARKUS_LAUNCH_DEVMODE: true
+    ports:
+      - '8080:8080'
+      - '5006:5005'
+  citrus-tests:
+    build:
+      context: ../citrus
+      dockerfile: ../citrus/src/test/docker/Dockerfile
+    command:
+      - "--skipTests"
+      - "true"
+      - "--duration"
+      - "9223372036854775807"
+    environment:
+      JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
+      SUT_URL: http://service:8080
+    ports:
+      - '4567:4567'
+      - '5007:5005'
