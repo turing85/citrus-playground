@@ -9,8 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
-import static com.consol.citrus.actions.EchoAction.Builder.echo;
-import static com.consol.citrus.actions.SleepAction.Builder.sleep;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class GetHelloIT extends TestNGCitrusSpringSupport {
@@ -23,10 +21,6 @@ public class GetHelloIT extends TestNGCitrusSpringSupport {
   @Test
   @CitrusTest
   public void getHello() {
-    $(echo("zzzZZZzzz"));
-    $(sleep().seconds(15));
-    $(echo("Let's go!"));
-
     // WHEN
     // @formatter:off
     $(http()
