@@ -16,6 +16,7 @@ import static com.consol.citrus.validation.json.JsonPathMessageValidationContext
 
 public class GetHealthIT extends TestNGCitrusSpringSupport {
 
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
   @Qualifier("serviceClient")
   private HttpClient serviceClient;
@@ -24,7 +25,7 @@ public class GetHealthIT extends TestNGCitrusSpringSupport {
   @CitrusTest
   public void getHealth() {
     $(echo("zzzZZZzzz"));
-    $(sleep().seconds(15f));
+    $(sleep().seconds(15));
     $(echo("Let's go!"));
 
     // WHEN

@@ -14,6 +14,7 @@ import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 
 public class GetMetricsIT extends TestNGCitrusSpringSupport {
 
+  @SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
   @Autowired
   @Qualifier("serviceClient")
   private HttpClient serviceClient;
@@ -22,7 +23,7 @@ public class GetMetricsIT extends TestNGCitrusSpringSupport {
   @CitrusTest
   public void getMetrics() {
     $(echo("zzzZZZzzz"));
-    $(sleep().seconds(15f));
+    $(sleep().seconds(15));
     $(echo("Let's go!"));
 
     // WHEN
