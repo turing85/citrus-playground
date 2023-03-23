@@ -188,34 +188,34 @@
                                 <goals>
                                     <goal>test-jar</goal>
                                 </goals>
-                                <configuration>
-                                    <assembly>
-                                        <descriptor>
-                                            <inline>
-                                                <id>citrus-tests</id>
-                                                <formats>
-                                                    <format>jar</format>
-                                                </formats>
-                                                <includeBaseDirectory>false</includeBaseDirectory>
-                                                <dependencySets>
-                                                    <dependencySet>
-                                                        <outputDirectory>/</outputDirectory>
-                                                        <useProjectArtifact>false</useProjectArtifact>
-                                                        <useProjectAttachments>true</useProjectAttachments>
-                                                        <unpack>true</unpack>
-                                                        <scope>test</scope>
-                                                    </dependencySet>
-                                                </dependencySets>
-                                                <!-- This is the magic that makes it work -->
-                                                <containerDescriptorHandlers>
-                                                    <containerDescriptorHandler>
-                                                        <handlerName>metaInf-spring</handlerName>
-                                                    </containerDescriptorHandler>
-                                                </containerDescriptorHandlers>
-                                            </inline>
-                                        </descriptor>
-                                    </assembly>
-                                </configuration>
+<!--                                <configuration>-->
+<!--                                    <assembly>-->
+<!--                                        <descriptor>-->
+<!--                                            <inline>-->
+<!--                                                <id>citrus-tests</id>-->
+<!--                                                <formats>-->
+<!--                                                    <format>jar</format>-->
+<!--                                                </formats>-->
+<!--                                                <includeBaseDirectory>false</includeBaseDirectory>-->
+<!--                                                <dependencySets>-->
+<!--                                                    <dependencySet>-->
+<!--                                                        <outputDirectory>/</outputDirectory>-->
+<!--                                                        <useProjectArtifact>false</useProjectArtifact>-->
+<!--                                                        <useProjectAttachments>true</useProjectAttachments>-->
+<!--                                                        <unpack>true</unpack>-->
+<!--                                                        <scope>test</scope>-->
+<!--                                                    </dependencySet>-->
+<!--                                                </dependencySets>-->
+<!--                                                &lt;!&ndash; This is the magic that makes it work &ndash;&gt;-->
+<!--                                                <containerDescriptorHandlers>-->
+<!--                                                    <containerDescriptorHandler>-->
+<!--                                                        <handlerName>metaInf-spring</handlerName>-->
+<!--                                                    </containerDescriptorHandler>-->
+<!--                                                </containerDescriptorHandlers>-->
+<!--                                            </inline>-->
+<!--                                        </descriptor>-->
+<!--                                    </assembly>-->
+<!--                                </configuration>-->
                                 <phase>package</phase>
                             </execution>
                         </executions>
