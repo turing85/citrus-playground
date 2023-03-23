@@ -15,12 +15,12 @@
     <properties>
         <!-- Plugins -->
         <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
-        <maven-surefire-plugin.version>2.22.2</maven-surefire-plugin.version>
+        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
 
         <!-- Dependencies -->
-        <citrus.version>3.3.0</citrus.version>
+        <citrus.version>3.4.0</citrus.version>
         <spring.version>5.3.16</spring.version>
-        <log4j2.version>2.17.2</log4j2.version>
+        <log4j2.version>2.20.0</log4j2.version>
 
         <!-- Project settings -->
         <maven.compiler.release>17</maven.compiler.release>
@@ -188,6 +188,34 @@
                                 <goals>
                                     <goal>test-jar</goal>
                                 </goals>
+                                <configuration>
+                                    <assembly>
+                                        <descriptor>
+                                            <inline>
+                                                <id>citrus-tests</id>
+                                                <formats>
+                                                    <format>jar</format>
+                                                </formats>
+                                                <includeBaseDirectory>false</includeBaseDirectory>
+                                                <dependencySets>
+                                                    <dependencySet>
+                                                        <outputDirectory>/</outputDirectory>
+                                                        <useProjectArtifact>false</useProjectArtifact>
+                                                        <useProjectAttachments>true</useProjectAttachments>
+                                                        <unpack>true</unpack>
+                                                        <scope>test</scope>
+                                                    </dependencySet>
+                                                </dependencySets>
+                                                <!-- This is the magic that makes it work -->
+                                                <containerDescriptorHandlers>
+                                                    <containerDescriptorHandler>
+                                                        <handlerName>metaInf-spring</handlerName>
+                                                    </containerDescriptorHandler>
+                                                </containerDescriptorHandlers>
+                                            </inline>
+                                        </descriptor>
+                                    </assembly>
+                                </configuration>
                                 <phase>package</phase>
                             </execution>
                         </executions>

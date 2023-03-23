@@ -1,3 +1,7 @@
 quarkus:
   live-reload:
     password: changeMe
+  rest-client:
+    external:
+      url: http://citrus-tests:8080
+      scope: javax.inject.Singleton

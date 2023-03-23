@@ -4,6 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({ HttpClients.class, Validators.class })
+@Import({ Http.class, Validators.class })
 public class ConfigurationRoot {
 }
