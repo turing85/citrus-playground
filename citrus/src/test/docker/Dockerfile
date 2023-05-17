@@ -1,15 +1,25 @@
 # Java 17
-FROM gcr.io/distroless/java17@sha256:e942c49fc2e6f7eacaf4ea6edf12f40f1a2c81454ba18c51df78c90b34df24b1
-ARG EMPTYDIR=target/emptydir
+FROM docker.io/library/eclipse-temurin:17.0.6_10-jre-alpine
 ARG JAR=target/*-citrus-tests.jar
 ARG DEPLOYMENT_DIR=/deployment
 ENV LANG="en_US.UTF-8" LANGUAGE="en_US:en"
 
-COPY --chown=185 ${EMPTYDIR} ${DEPLOYMENT_DIR}
-COPY --chown=185 ${JAR} ${DEPLOYMENT_DIR}/app.jar
+USER root
+RUN adduser \
+  -u 185 \
+  -h ${DEPLOYMENT_DIR} \
+  -H \
+  -s /bin/sh \
+  -D \
+  runner
 
-USER 185
+USER 185:185
 WORKDIR ${DEPLOYMENT_DIR}
+COPY --chmod=755 ${JAR} ${DEPLOYMENT_DIR}/app.jar
 
-ENTRYPOINT [ "java", "-jar", "app.jar" ]
+ENTRYPOINT [ \
+  "java", \
+  "-jar", \
+  "app.jar" \
+]
 

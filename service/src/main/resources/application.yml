@@ -4,4 +4,4 @@ quarkus:
   rest-client:
     external:
       url: http://citrus-tests:8080
-      scope: javax.inject.Singleton
+      scope: jakarta.inject.Singleton

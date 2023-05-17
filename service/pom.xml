@@ -18,7 +18,7 @@
         <surefire-plugin.version>3.0.0</surefire-plugin.version>
         <quarkus.platform.artifact-id>quarkus-bom</quarkus.platform.artifact-id>
         <quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
-        <quarkus.platform.version>2.16.5.Final</quarkus.platform.version>
+        <quarkus.platform.version>3.0.3.Final</quarkus.platform.version>
 
         <!-- Project settings -->
         <maven.compiler.release>17</maven.compiler.release>
@@ -104,10 +104,6 @@
                         <maven.home>${maven.home}</maven.home>
                     </systemPropertyVariables>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-antrun-plugin</artifactId>
             </plugin>
         </plugins>
     </build>
