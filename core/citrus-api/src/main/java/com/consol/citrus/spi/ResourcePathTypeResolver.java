@@ -5,16 +5,24 @@ import java.io.InputStream;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Modifier;
+import java.net.URL;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Optional;
 import java.util.Properties;
 import java.util.stream.Stream;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import com.consol.citrus.exceptions.CitrusRuntimeException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.core.io.support.ResourcePatternResolver;
 
@@ -99,8 +107,10 @@ public class ResourcePathTypeResolver implements TypeResolver {
         final String path = getFullResourcePath(resourcePath);
 
         try {
-            Stream.of(new PathMatchingResourcePatternResolver().getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + path + "/*"))
-                    .forEach(file -> {
+            Stream.concat(
+                    Stream.of(new PathMatchingResourcePatternResolver().getResources(ResourcePatternResolver.CLASSPATH_ALL_URL_PREFIX + path + "/*")),
+                    resolveAllFromJar(path).stream())
+                .forEach(file -> {
                         Optional<String> resourceName = Optional.ofNullable(file.getFilename());
                         if (resourceName.isEmpty()) {
                             LOG.warn(String.format("Skip unsupported resource '%s' for resource lookup", file));
@@ -124,10 +134,35 @@ public class ResourcePathTypeResolver implements TypeResolver {
                         }
                     });
         } catch (IOException e) {
-            LOG.warn(String.format("Failed to resolve resources in '%s'", path), e);
+            throw new CitrusRuntimeException(String.format("Unable to load properties from jar path configuration at '%s'", path), e);
         }
 
         return resources;
+    }
+
+    private List<Resource> resolveAllFromJar(String path) {
+        URL root = getClass().getProtectionDomain().getCodeSource().getLocation();
+        List<Resource> result = new ArrayList<>();
+        if (root.toString().endsWith(".jar") && !root.toString().matches(".*/citrus-api-\\d+\\.\\d+\\.\\d+\\.jar")) {
+            try (ZipInputStream in = new ZipInputStream(getClass().getProtectionDomain().getCodeSource().getLocation().openStream())) {
+                while (true) {
+                    ZipEntry entry = in.getNextEntry();
+                    if (Objects.isNull(entry)) {
+                        break;
+                    }
+                    if (entry.getName().startsWith(path)) {
+                            Optional.of(getClass())
+                                .map(Class::getClassLoader)
+                                .map(classLoader -> classLoader.getResource(entry.getName()))
+                                .map(UrlResource::new)
+                                .ifPresent(result::add);
+                    }
+                }
+            } catch (IOException e) {
+                LOG.error("Caught exception: ", e);
+            }
+        }
+        return result;
     }
 
     /**
