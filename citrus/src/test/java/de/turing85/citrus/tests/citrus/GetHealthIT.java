@@ -7,8 +7,6 @@ import de.turing85.citrus.tests.citrus.configuration.Http;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Test;
 
-import static com.consol.citrus.actions.EchoAction.Builder.echo;
-import static com.consol.citrus.actions.SleepAction.Builder.sleep;
 import static com.consol.citrus.http.actions.HttpActionBuilder.http;
 import static com.consol.citrus.validation.json.JsonPathMessageValidationContext.Builder.jsonPath;
 
@@ -17,9 +15,6 @@ public class GetHealthIT extends TestNGCitrusSpringSupport {
   @Test
   @CitrusTest
   public void getHealth() {
-    $(echo("zzzZZZzzz"));
-    $(sleep().seconds(15));
-    $(echo("Let's go!"));
 
     // WHEN
     // @formatter:off
