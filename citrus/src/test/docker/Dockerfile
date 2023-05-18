@@ -8,15 +8,14 @@ USER root
 RUN adduser \
   -u 185 \
   -h ${DEPLOYMENT_DIR} \
-  -H \
   -s /bin/sh \
   -D \
   runner
 
-USER 185:185
 WORKDIR ${DEPLOYMENT_DIR}
 COPY --chmod=755 ${JAR} ${DEPLOYMENT_DIR}/app.jar
 
+USER 185:185
 ENTRYPOINT [ \
   "java", \
   "-jar", \

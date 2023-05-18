@@ -1,6 +1,7 @@
 version: "3.7"
 services:
   service:
+    container_name: service
     build:
       context: ../service
       dockerfile: ../service/src/main/docker/Dockerfile
@@ -12,6 +13,7 @@ services:
       - '8080:8080'
       - '5006:5005'
   citrus-tests:
+    container_name: citrus-tests
     build:
       context: ../citrus
       dockerfile: ../citrus/src/test/docker/Dockerfile

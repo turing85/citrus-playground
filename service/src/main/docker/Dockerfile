@@ -8,18 +8,17 @@ USER root
 RUN adduser \
   -u 185 \
   -h ${DEPLOYMENT_DIR} \
-  -H \
   -s /bin/sh \
   -D \
   runner
 
-USER 185:185
 WORKDIR ${DEPLOYMENT_DIR}
 COPY --chmod=775 target/quarkus-app/lib/ ${DEPLOYMENT_DIR}/lib/
 COPY --chmod=775 target/quarkus-app/*.jar ${DEPLOYMENT_DIR}/
 COPY --chmod=775 target/quarkus-app/app/ ${DEPLOYMENT_DIR}/app/
 COPY --chmod=775 target/quarkus-app/quarkus/ ${DEPLOYMENT_DIR}/quarkus/
 
+USER 185:185
 ENTRYPOINT [ \
   "java", \
   "-jar", \
