@@ -19,7 +19,7 @@
 
         <!-- Dependencies -->
         <citrus.version>3.4.0</citrus.version>
-        <spring.version>5.3.16</spring.version>
+        <spring.version>5.3.27</spring.version>
         <log4j2.version>2.20.0</log4j2.version>
 
         <!-- Project settings -->
