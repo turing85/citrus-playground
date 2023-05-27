@@ -14,7 +14,7 @@
 
     <properties>
         <!-- Plugins -->
-        <maven-compiler-plugin.version>3.9.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
         <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
 
         <!-- Dependencies -->
