@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import java.time.Duration;
+
 @Configuration
 public class Http {
 
@@ -29,6 +31,7 @@ public class Http {
     public HttpServer httpServer(@Value("${test-config.http.server.port}") int port) {
         return new HttpServerBuilder()
             .port(port)
+            .timeout(Duration.ofSeconds(10).toMillis())
             .autoStart(true)
             .build();
     }
