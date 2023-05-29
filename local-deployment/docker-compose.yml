@@ -2,6 +2,7 @@ version: '3.8'
 services:
   service:
     container_name: service
+    image: citrus-playground/service
     build:
       context: ../service
       dockerfile: ../service/src/main/docker/Dockerfile
@@ -14,6 +15,7 @@ services:
       - '5006:5005'
   citrus-tests:
     container_name: citrus-tests
+    image: citrus-playground/citrus-tests
     build:
       context: ../citrus
       dockerfile: ../citrus/src/test/docker/Dockerfile
