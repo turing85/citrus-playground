@@ -1,10 +1,10 @@
-package de.turing85.citrus.tests.citrus;
+package de.turing85.citrus.playground.citrus;
 
 import com.consol.citrus.TestCaseRunner;
 import com.consol.citrus.annotations.CitrusResource;
 import com.consol.citrus.annotations.CitrusTest;
 import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
-import de.turing85.citrus.tests.citrus.configuration.Http;
+import de.turing85.citrus.playground.citrus.configuration.Http;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;

@@ -1,4 +1,4 @@
-package de.turing85.citrus.tests.citrus.configuration;
+package de.turing85.citrus.playground.citrus.configuration;
 
 import com.consol.citrus.validation.text.PlainTextMessageValidator;
 import org.springframework.context.annotation.Bean;

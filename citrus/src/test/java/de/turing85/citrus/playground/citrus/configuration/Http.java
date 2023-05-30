@@ -1,4 +1,4 @@
-package de.turing85.citrus.tests.citrus.configuration;
+package de.turing85.citrus.playground.citrus.configuration;
 
 import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
 import com.consol.citrus.http.client.HttpClient;

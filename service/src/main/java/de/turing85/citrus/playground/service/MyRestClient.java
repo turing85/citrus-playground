@@ -1,4 +1,4 @@
-package de.turing85.citrus.tests.service;
+package de.turing85.citrus.playground.service;
 
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
