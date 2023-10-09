@@ -21,8 +21,9 @@
 
         <!-- Dependencies -->
         <citrus.version>3.4.0</citrus.version>
-        <spring.version>5.3.27</spring.version>
         <log4j2.version>2.20.0</log4j2.version>
+        <spring.version>5.3.30</spring.version>
+        <xmlunit-matchers.version>2.9.1</xmlunit-matchers.version>
 
         <!-- Project settings -->
         <maven.compiler.release>17</maven.compiler.release>
@@ -201,35 +202,71 @@
         <!-- Citrus -->
         <dependency>
             <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-remote-server</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-base</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-spring</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.consol.citrus</groupId>
+            <artifactId>citrus-spring-integration</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-endpoint-catalog</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-testng</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-http</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-validation-json</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
             <artifactId>citrus-validation-text</artifactId>
+            <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-remote-server</artifactId>
+            <artifactId>citrus-validation-xml</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.hamcrest</groupId>
+            <artifactId>hamcrest-core</artifactId>
+            <version>2.2</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.glassfish.jaxb</groupId>
+            <artifactId>jaxb-runtime</artifactId>
+            <version>4.0.3</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.xmlunit</groupId>
+            <artifactId>xmlunit-matchers</artifactId>
+            <version>${xmlunit-matchers.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class Validators {
-
   @Bean
   PlainTextMessageValidator defaultPlainTextMessageValidator() {
     return new PlainTextMessageValidator();
