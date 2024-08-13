@@ -14,18 +14,21 @@
 
     <properties>
         <!-- Plugins -->
-        <maven-compiler-plugin.version>3.11.0</maven-compiler-plugin.version>
+        <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
-        <maven-surefire-plugin.version>3.0.0</maven-surefire-plugin.version>
+        <surefire-plugin.version>3.3.1</surefire-plugin.version>
 
         <!-- Dependencies -->
-        <citrus.version>3.4.0</citrus.version>
-        <spring.version>5.3.27</spring.version>
-        <log4j2.version>2.20.0</log4j2.version>
+        <citrus.version>4.2.1</citrus.version>
+        <log4j2.version>2.23.1</log4j2.version>
+        <spring.version>6.1.11</spring.version>
+        <truth.version>1.4.4</truth.version>
 
         <!-- Project settings -->
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.paramters>tru</maven.compiler.paramters>
+        <maven.compiler.proc>full</maven.compiler.proc>
+        <maven.compiler.release>21</maven.compiler.release>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
@@ -42,11 +45,6 @@
                     <version>${maven-compiler-plugin.version}</version>
                 </plugin>
                 <plugin>
-                    <groupId>com.consol.citrus</groupId>
-                    <artifactId>citrus-remote-maven-plugin</artifactId>
-                    <version>${citrus.version}</version>
-                </plugin>
-                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-resources-plugin</artifactId>
                     <version>${maven-resources-plugin.version}</version>
@@ -59,26 +57,22 @@
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
+                    <version>${surefire-plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <id>default-resources</id>
+                            <phase>none</phase>
+                        </execution>
+                    </executions>
                 </plugin>
                 <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
-                    <version>${maven-surefire-plugin.version}</version>
+                    <version>${surefire-plugin.version}</version>
                 </plugin>
             </plugins>
         </pluginManagement>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-resources-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-resources</id>
-                        <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -96,47 +90,6 @@
                     <execution>
                         <id>default-jar</id>
                         <phase>none</phase>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
-                <groupId>com.consol.citrus</groupId>
-                <artifactId>citrus-remote-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>build-uber-jar</id>
-                        <goals>
-                            <goal>test-jar</goal>
-                        </goals>
-                        <configuration>
-                            <assembly>
-                                <descriptor>
-                                    <inline>
-                                        <id>citrus-tests</id>
-                                        <formats>
-                                            <format>jar</format>
-                                        </formats>
-                                        <includeBaseDirectory>false</includeBaseDirectory>
-                                        <dependencySets>
-                                            <dependencySet>
-                                                <outputDirectory>/</outputDirectory>
-                                                <useProjectArtifact>false</useProjectArtifact>
-                                                <useProjectAttachments>true</useProjectAttachments>
-                                                <unpack>true</unpack>
-                                                <scope>test</scope>
-                                            </dependencySet>
-                                        </dependencySets>
-                                        <!-- This is the magic that makes it work -->
-                                        <containerDescriptorHandlers>
-                                            <containerDescriptorHandler>
-                                                <handlerName>metaInf-spring</handlerName>
-                                            </containerDescriptorHandler>
-                                        </containerDescriptorHandlers>
-                                    </inline>
-                                </descriptor>
-                            </assembly>
-                        </configuration>
-                        <phase>package</phase>
                     </execution>
                 </executions>
             </plugin>
@@ -170,16 +123,11 @@
     <dependencyManagement>
         <dependencies>
             <dependency>
-                <groupId>com.consol.citrus</groupId>
+                <groupId>org.citrusframework</groupId>
                 <artifactId>citrus-bom</artifactId>
                 <version>${citrus.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>com.consol.citrus</groupId>
-                <artifactId>citrus-remote-server</artifactId>
-                <version>${citrus.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
@@ -200,117 +148,37 @@
 
         <!-- Citrus -->
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-base</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-spring</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-endpoint-catalog</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-testng</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-http</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-validation-json</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
+            <groupId>org.citrusframework</groupId>
             <artifactId>citrus-validation-text</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.consol.citrus</groupId>
-            <artifactId>citrus-remote-server</artifactId>
+            <groupId>com.google.truth</groupId>
+            <artifactId>truth</artifactId>
+            <version>${truth.version}</version>
         </dependency>
     </dependencies>
-
-    <profiles>
-        <profile>
-            <id>trigger-citrus-remote</id>
-            <build>
-                <plugins>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-resources-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>default-testResources</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-compiler-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>default-testCompile</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-failsafe-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>integration-tests</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>org.apache.maven.plugins</groupId>
-                        <artifactId>maven-surefire-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>default-test</id>
-                                <phase>none</phase>
-                            </execution>
-                        </executions>
-                    </plugin>
-                    <plugin>
-                        <groupId>com.consol.citrus</groupId>
-                        <artifactId>citrus-remote-maven-plugin</artifactId>
-                        <executions>
-                            <execution>
-                                <id>build-uber-jar</id>
-                                <phase>none</phase>
-                            </execution>
-                            <execution>
-                                <id>trigger-citrus-remote</id>
-                                <goals>
-                                    <goal>test</goal>
-                                    <goal>verify</goal>
-                                </goals>
-                                <phase>verify</phase>
-                                <configuration>
-                                    <server>
-                                        <url>${citrus.remote.server.url}</url>
-                                    </server>
-                                    <run>
-                                        <engine>testng</engine>
-                                        <async>true</async>
-                                        <pollingInterval>15000</pollingInterval>
-                                    </run>
-                                    <report>
-                                        <directory>citrus-remote</directory>
-                                    </report>
-                                </configuration>
-                            </execution>
-                        </executions>
-                    </plugin>
-                </plugins>
-            </build>
-        </profile>
-    </profiles>
 </project>

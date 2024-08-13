@@ -10,7 +10,6 @@
     <version>1.0-SNAPSHOT</version>
     <name>Citrus Playground :: Parent</name>
     <modules>
-        <module>service</module>
         <module>citrus</module>
     </modules>
 </project>
