@@ -11,6 +11,7 @@ import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.UUID;
 
@@ -25,8 +26,9 @@ public class GetImageIT extends TestNGCitrusSpringSupport {
   public void getImage(
       @Optional @CitrusResource TestCaseRunner runner,
       @Optional @CitrusResource TestContext context) {
-    runner.variable("image", new Resources.ClasspathResource("image.tif"));
     runner.variable("correlation-id", UUID.randomUUID().toString());
+    runner.variable("image", new Resources.ClasspathResource("image.tif"));
+    runner.variable("charset", StandardCharsets.ISO_8859_1);
     // @formatter:off
     runner.given(
         async().actions(
@@ -42,7 +44,7 @@ public class GetImageIT extends TestNGCitrusSpringSupport {
                     .header("X-Correlation-ID", "${correlation-id}")
                     .body(
                         context.getVariable("image", Resources.ClasspathResource.class),
-                        StandardCharsets.ISO_8859_1)));
+                        context.getVariable("charset", Charset.class))));
 
     runner.when(
         http().client(HttpConfig.CLIENT).send()
@@ -59,7 +61,7 @@ public class GetImageIT extends TestNGCitrusSpringSupport {
                 .header("X-Correlation-ID", "${correlation-id}")
                 .body(
                     context.getVariable("image", Resources.ClasspathResource.class),
-                    StandardCharsets.ISO_8859_1));
+                    context.getVariable("charset", Charset.class)));
     // @formatter:on
   }
 }
