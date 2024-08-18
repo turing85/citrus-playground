@@ -5,6 +5,7 @@ import org.citrusframework.TestCaseRunner;
 import org.citrusframework.annotations.CitrusResource;
 import org.citrusframework.annotations.CitrusTest;
 import org.citrusframework.context.TestContext;
+import org.citrusframework.message.MessageHeaders;
 import org.citrusframework.spi.Resources;
 import org.citrusframework.testng.spring.TestNGCitrusSpringSupport;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,11 @@ import org.testng.annotations.Test;
 
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.util.Map;
 import java.util.UUID;
 
 import static org.citrusframework.container.Async.Builder.async;
+import static org.citrusframework.dsl.MessageSupport.MessageHeaderSupport.fromHeaders;
 import static org.citrusframework.http.actions.HttpActionBuilder.http;
 
 @SuppressWarnings("unused")
@@ -51,11 +54,13 @@ public class GetImageIT extends TestNGCitrusSpringSupport {
             .get("/image")
             .message()
                 .accept("image/tiff")
-                .header("X-Correlation-ID", "${correlation-id}"));
+                .header("X-Correlation-ID", "${correlation-id}")
+                .extract(fromHeaders().header(MessageHeaders.ID, "id-get-image")));
 
     runner.then(
         http().client(HttpConfig.CLIENT).receive()
             .response(HttpStatus.OK)
+            .selector(Map.of(MessageHeaders.ID, "${id-get-image}"))
             .message()
                 .contentType("image/tiff")
                 .header("X-Correlation-ID", "${correlation-id}")
