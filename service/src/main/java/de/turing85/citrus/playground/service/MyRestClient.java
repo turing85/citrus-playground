@@ -1,5 +1,6 @@
 package de.turing85.citrus.playground.service;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -11,5 +12,5 @@ import org.eclipse.microprofile.rest.client.inject.RegisterRestClient;
 @RegisterRestClient(configKey = "external")
 public interface MyRestClient {
   @GET
-  String getGreeting();
+  Uni<String> getGreeting();
 }

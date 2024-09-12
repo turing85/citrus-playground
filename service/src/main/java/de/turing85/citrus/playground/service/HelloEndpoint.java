@@ -1,5 +1,6 @@
 package de.turing85.citrus.playground.service;
 
+import io.smallrye.mutiny.Uni;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -16,7 +17,7 @@ public class HelloEndpoint {
     }
 
     @GET
-    public String hello() {
+    public Uni<String> hello() {
         return myRestClient.getGreeting();
     }
 }

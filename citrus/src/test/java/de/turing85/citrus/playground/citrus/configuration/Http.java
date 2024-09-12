@@ -1,9 +1,9 @@
 package de.turing85.citrus.playground.citrus.configuration;
 
-import com.consol.citrus.dsl.endpoint.CitrusEndpoints;
-import com.consol.citrus.http.client.HttpClient;
-import com.consol.citrus.http.server.HttpServer;
-import com.consol.citrus.http.server.HttpServerBuilder;
+import org.citrusframework.dsl.endpoint.CitrusEndpoints;
+import org.citrusframework.http.client.HttpClient;
+import org.citrusframework.http.server.HttpServer;
+import org.citrusframework.http.server.HttpServerBuilder;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
@@ -13,7 +13,6 @@ import java.time.Duration;
 
 @Configuration
 public class Http {
-
     public static final String SERVICE_CLIENT_NAME = "serviceClient";
     public static final String HTTP_SERVER_NAME = "httpServer";
 

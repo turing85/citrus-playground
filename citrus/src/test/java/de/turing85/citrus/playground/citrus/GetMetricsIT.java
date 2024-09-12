@@ -1,15 +1,15 @@
 package de.turing85.citrus.playground.citrus;
 
-import com.consol.citrus.TestCaseRunner;
-import com.consol.citrus.annotations.CitrusResource;
-import com.consol.citrus.annotations.CitrusTest;
-import com.consol.citrus.testng.spring.TestNGCitrusSpringSupport;
+import org.citrusframework.TestCaseRunner;
+import org.citrusframework.annotations.CitrusResource;
+import org.citrusframework.annotations.CitrusTest;
+import org.citrusframework.testng.spring.TestNGCitrusSpringSupport;
 import de.turing85.citrus.playground.citrus.configuration.Http;
 import org.springframework.http.HttpStatus;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
-import static com.consol.citrus.http.actions.HttpActionBuilder.http;
+import static org.citrusframework.http.actions.HttpActionBuilder.http;
 
 @SuppressWarnings("unused")
 public class GetMetricsIT extends TestNGCitrusSpringSupport {
