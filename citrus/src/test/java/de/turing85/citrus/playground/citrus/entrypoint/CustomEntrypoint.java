@@ -3,7 +3,6 @@ package de.turing85.citrus.playground.citrus.entrypoint;
 import io.vertx.core.http.HttpHeaders;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.ext.web.Router;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
@@ -29,7 +28,8 @@ public class CustomEntrypoint {
         .forLogger(LogManager.getLogger("system.out"))
         .buildPrintStream());
     CitrusRemoteServer.entrypoint(
-        args, List.of(CustomEntrypoint::getLogHandler, CustomEntrypoint::rotateLogHandler));
+        args,
+        List.of(CustomEntrypoint::getLogHandler, CustomEntrypoint::rotateLogHandler));
   }
 
   private static void getLogHandler(Router router) {
@@ -44,9 +44,7 @@ public class CustomEntrypoint {
                 .putHeader(
                     HttpHeaders.CONTENT_DISPOSITION,
                     "attachment; filename=\"citrus.log\"")
-                .end(Files.readString(
-                    CITRUS_LOG_PATH,
-                    Charset.defaultCharset()))
+                .sendFile(CITRUS_LOG_PATH.toAbsolutePath().toString())
                 .onSuccess(unused -> {
                   if (Optional.ofNullable(ctx.request().params().get("reset"))
                       .map(Boolean::parseBoolean)

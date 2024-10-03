@@ -20,6 +20,7 @@
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
 
         <!-- Dependencies -->
+        <artemis.version>2.37.0</artemis.version>
         <citrus.version>4.3.3</citrus.version>
         <citrus-remote.version>4.4.0-SNAPSHOT</citrus-remote.version>
         <spring.version>6.1.12</spring.version>
@@ -217,8 +218,7 @@
         </dependency>
         <dependency>
             <groupId>org.citrusframework</groupId>
-            <artifactId>citrus-validation-json</artifactId>
-            <scope>test</scope>
+            <artifactId>citrus-jms</artifactId>
         </dependency>
         <dependency>
             <groupId>org.citrusframework</groupId>
@@ -229,6 +229,13 @@
             <groupId>org.citrusframework</groupId>
             <artifactId>citrus-remote-server</artifactId>
             <scope>test</scope>
+        </dependency>
+
+        <!-- JMS -->
+        <dependency>
+            <groupId>org.apache.activemq</groupId>
+            <artifactId>artemis-jakarta-client</artifactId>
+            <version>${artemis.version}</version>
         </dependency>
     </dependencies>
 
