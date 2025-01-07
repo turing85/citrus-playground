@@ -207,7 +207,7 @@
         </dependency>
         <dependency>
             <groupId>org.citrusframework</groupId>
-            <artifactId>citrus-testng</artifactId>
+            <artifactId>citrus-junit5</artifactId>
             <scope>test</scope>
         </dependency>
         <dependency>
@@ -297,7 +297,7 @@
                                         <url>${citrus.remote.server.url}</url>
                                     </server>
                                     <run>
-                                        <engine>testng</engine>
+                                        <engine>junit5</engine>
                                         <async>true</async>
                                         <pollingInterval>15000</pollingInterval>
                                     </run>
