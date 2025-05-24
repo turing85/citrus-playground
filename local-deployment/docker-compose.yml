@@ -20,7 +20,7 @@ services:
       CITRUS_AGENT_SKIP_TESTS: true
       CITRUS_AGENT_TEST_ENGINE: testng
       CITRUS_AGENT_TEST_JAR: /deployments/resources/citrus-tests.jar
-      CITRUS_LOG_DIR: /tmp/logs
+      CITRUS_LOG_DIR: /deployments/data/citrus-reports/
       HTTP_SERVER_PORT: 8080
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       SUT_URL: http://service:8080
