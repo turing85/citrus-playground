@@ -16,6 +16,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+import static org.citrusframework.actions.EchoAction.Builder.echo;
+import static org.citrusframework.actions.SleepAction.Builder.sleep;
 import static org.citrusframework.container.Async.Builder.async;
 import static org.citrusframework.http.actions.HttpActionBuilder.http;
 
@@ -33,6 +35,9 @@ public class GetHelloIT extends TestNGCitrusSpringSupport {
   @CitrusTest
   public void getHello(@Optional @CitrusResource TestCaseRunner runner) {
     // @formatter:off
+    runner.$(echo("zzzZZZzzz"));
+    runner.given(sleep().seconds(2));
+    runner.$(echo("WAKE UP"));
     runner.variable("payload", "Hai");
     runner.given(
         async().actions(

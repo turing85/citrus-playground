@@ -14,6 +14,8 @@ import org.springframework.test.context.ContextConfiguration;
 import org.testng.annotations.Optional;
 import org.testng.annotations.Test;
 
+import static org.citrusframework.actions.EchoAction.Builder.echo;
+import static org.citrusframework.actions.SleepAction.Builder.sleep;
 import static org.citrusframework.http.actions.HttpActionBuilder.http;
 
 @ContextConfiguration(classes = ConfigurationRoot.class)
@@ -26,6 +28,9 @@ public class GetMetricsIT extends TestNGCitrusSpringSupport {
   @CitrusTest
   public void getMetrics(@Optional @CitrusResource TestCaseRunner runner) {
     // @formatter:off
+    runner.$(echo("zzzZZZzzz"));
+    runner.given(sleep().seconds(2));
+    runner.$(echo("WAKE UP"));
     runner.when(
         http()
             .client(serviceClient)

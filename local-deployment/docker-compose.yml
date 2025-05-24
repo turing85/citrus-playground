@@ -25,7 +25,7 @@ services:
       JAVA_TOOL_OPTIONS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:5005
       SUT_URL: http://service:8080
     volumes:
-      - ../citrus/target/citrus-playground-citrus-1.0-SNAPSHOT-tests.jar:/deployments/resources/citrus-tests.jar:ro
+      - ../citrus/target/citrus-playground-citrus-1.0-SNAPSHOT-citrus-tests.jar:/deployments/resources/citrus-tests.jar:ro
       - ../citrus/src/test/resources/log4j2.properties:/deployments/resources/log4j2.properties
     ports:
       - '4567:4567'

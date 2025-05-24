@@ -14,6 +14,7 @@
 
     <properties>
         <!-- Plugins -->
+        <docker-compose-maven-plugin.version>4.0.0</docker-compose-maven-plugin.version>
         <maven-compiler-plugin.version>3.13.0</maven-compiler-plugin.version>
         <maven-jar-plugin.version>3.3.0</maven-jar-plugin.version>
         <maven-resources-plugin.version>3.3.1</maven-resources-plugin.version>
@@ -29,7 +30,10 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <!-- Plugin configuration -->
-        <citrus.remote.server.url>http://localhost:4567</citrus.remote.server.url>
+        <citrus.agent.run.async>true</citrus.agent.run.async>
+        <citrus.agent.run.engine>testng</citrus.agent.run.engine>
+        <citrus.agent.server.url>http://localhost:4567</citrus.agent.server.url>
+        <citrus.agent.run.polling.interval>1000</citrus.agent.run.polling.interval>
     </properties>
 
     <build>
@@ -56,6 +60,16 @@
                     <version>${maven-surefire-plugin.version}</version>
                 </plugin>
                 <plugin>
+                    <groupId>com.dkanejs.maven.plugins</groupId>
+                    <artifactId>docker-compose-maven-plugin</artifactId>
+                    <version>${docker-compose-maven-plugin.version}</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.citrusframework.mvn</groupId>
+                    <artifactId>citrus-agent-maven-plugin</artifactId>
+                    <version>${citrus.version}</version>
+                </plugin>
+                <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-failsafe-plugin</artifactId>
                     <version>${maven-surefire-plugin.version}</version>
@@ -79,19 +93,15 @@
                 <artifactId>maven-compiler-plugin</artifactId>
                 <executions>
                     <execution>
-                        <id>default-compile</id>
+                        <id>test-compile</id>
                         <phase>none</phase>
                     </execution>
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
+                <groupId>org.citrusframework.mvn</groupId>
+                <artifactId>citrus-agent-maven-plugin</artifactId>
                 <executions>
-                    <execution>
-                        <id>default-jar</id>
-                        <phase>none</phase>
-                    </execution>
                     <execution>
                         <id>test-jar</id>
                         <goals>
@@ -197,4 +207,126 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
+
+    <profiles>
+        <profile>
+            <id>run-agent-tests</id>
+            <activation>
+                <property>
+                    <name>run-agent-tests</name>
+                </property>
+            </activation>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-compile</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>default-testCompile</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-resources-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-testResources</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-jar-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>default-jar</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-failsafe-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>integration-tests</id>
+                                <phase>none</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>com.dkanejs.maven.plugins</groupId>
+                        <artifactId>docker-compose-maven-plugin</artifactId>
+                        <configuration>
+                            <composeFiles>
+                                <composeFile>${maven.multiModuleProjectDirectory}/local-deployment/docker-compose.yml</composeFile>
+                            </composeFiles>
+                            <detachedMode>true</detachedMode>
+                            <detail>false</detail>
+                            <verbose>false</verbose>
+                        </configuration>
+                        <executions>
+                            <execution>
+                                <id>compose-up</id>
+                                <goals>
+                                    <goal>down</goal>
+                                    <goal>up</goal>
+                                </goals>
+                                <phase>pre-integration-test</phase>
+                            </execution>
+                            <execution>
+                                <id>compose-down</id>
+                                <goals>
+                                    <goal>down</goal>
+                                </goals>
+                                <phase>post-integration-test</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.citrusframework.mvn</groupId>
+                        <artifactId>citrus-agent-maven-plugin</artifactId>
+                        <executions>
+                            <execution>
+                                <id>test-jar</id>
+                                <phase>none</phase>
+                            </execution>
+                            <execution>
+                                <id>run-agent-tests</id>
+                                <goals>
+                                    <goal>test</goal>
+                                </goals>
+                                <phase>integration-test</phase>
+                                <configuration>
+                                    <run>
+                                        <async>${citrus.agent.run.async}</async>
+                                        <engine>${citrus.agent.run.engine}</engine>
+                                        <polling-interval>${citrus.agent.run.polling.interval}</polling-interval>
+                                    </run>
+                                    <server>
+                                        <url>${citrus.agent.server.url}</url>
+                                    </server>
+                                </configuration>
+                            </execution>
+                            <execution>
+                                <id>verify-agent-tests</id>
+                                <goals>
+                                    <goal>verify</goal>
+                                </goals>
+                                <phase>verify</phase>
+                            </execution>
+                        </executions>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
 </project>
