@@ -20,10 +20,9 @@
         <maven-surefire-plugin.version>3.5.0</maven-surefire-plugin.version>
 
         <!-- Dependencies -->
-        <citrus.version>4.5.2</citrus.version>
-        <citrus-remote.version>4.5.2</citrus-remote.version>
-        <spring.version>6.2.2</spring.version>
-        <log4j2.version>2.24.0</log4j2.version>
+        <citrus.version>4.6.0</citrus.version>
+        <citrus-remote.version>4.6.0</citrus-remote.version>
+        <log4j2.version>2.24.3</log4j2.version>
 
         <!-- Project settings -->
         <maven.compiler.release>21</maven.compiler.release>
@@ -169,14 +168,6 @@
     </dependencyManagement>
 
     <dependencies>
-        <!-- Spring-Boot -->
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
